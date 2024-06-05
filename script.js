@@ -2,7 +2,7 @@
 let score = 0;
 let activeHoles = [];
 const gameDuration = 30000; // 30 seconds
-const moleAppearanceTime = 800; // 800 milliseconds
+const moleAppearanceTime = 500; // 500 milliseconds
 let gameInterval;
 let endTimeout;
 
@@ -32,7 +32,7 @@ function hitMole(event) {
     if (event.target.classList.contains('mole')) {
         score++;
         document.getElementById('score').textContent = score;
-        const audio = new Audio('hit-sound.mp3');
+        const audio = document.getElementById('hit-sound');
         audio.play();
         event.target.classList.remove('mole');
         activeHoles = activeHoles.filter(hole => hole !== event.target);
@@ -47,6 +47,8 @@ function startGame() {
     document.getElementById('score').textContent = score;
     document.getElementById('end-message').classList.add('hidden');
     document.getElementById('restart').classList.add('hidden');
+    document.getElementById('start').classList.add('hidden');
+    document.getElementById('game').classList.remove('hidden');
     gameInterval = setInterval(showMole, moleAppearanceTime);
     endTimeout = setTimeout(() => endGame(false), gameDuration);
 }
@@ -55,12 +57,15 @@ function endGame(passed) {
     clearInterval(gameInterval);
     clearTimeout(endTimeout);
     hideMoles();
+    const endSound = document.getElementById('end-sound');
+    endSound.play();
+    const endMessage = document.getElementById('end-message');
     if (passed) {
-        document.getElementById('end-message').textContent = '恭喜你，游戏通过太棒了！';
+        endMessage.textContent = '恭喜你，游戏通过！';
     } else {
-        document.getElementById('end-message').textContent = '游戏结束，得分未达标，继续努力。';
+        endMessage.textContent = '游戏结束，得分未达标。';
     }
-    document.getElementById('end-message').classList.remove('hidden');
+    endMessage.classList.remove('hidden');
     document.getElementById('restart').classList.remove('hidden');
 }
 
@@ -68,6 +73,5 @@ document.querySelectorAll('.hole').forEach(hole => {
     hole.addEventListener('click', hitMole);
 });
 
+document.getElementById('start').addEventListener('click', startGame);
 document.getElementById('restart').addEventListener('click', startGame);
-
-startGame();
