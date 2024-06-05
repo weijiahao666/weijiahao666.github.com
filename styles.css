@@ -6,9 +6,18 @@ body {
     align-items: center;
 }
 
+h1 {
+    margin-top: 20px;
+}
+
+p {
+    margin: 10px 0;
+    text-align: center;
+}
+
 #game {
     display: grid;
-    grid-template-columns: repeat(3, 100px);
+    grid-template-columns: repeat(4, 100px);
     grid-gap: 10px;
 }
 
@@ -17,14 +26,26 @@ body {
     height: 100px;
     background-color: #8B4513;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .mole {
     width: 80px;
     height: 80px;
-    background-color: gray;
+    background-image: url('mole.png');
+    background-size: cover;
     border-radius: 50%;
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+#end-message {
+    margin-top: 20px;
+    font-size: 24px;
+    color: green;
 }
