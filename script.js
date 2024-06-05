@@ -1,31 +1,55 @@
 // script.js
 let score = 0;
-let activeHole = null;
+let activeHoles = [];
+const gameDuration = 30000; // 30 seconds
+const moleAppearanceTime = 800; // 800 milliseconds
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
-    const randomIndex = Math.floor(Math.random() * holes.length);
-    return holes[randomIndex];
+    return holes[Math.floor(Math.random() * holes.length)];
 }
 
 function showMole() {
-    if (activeHole) {
-        activeHole.classList.remove('mole');
+    hideMoles();
+    const numOfMoles = Math.floor(Math.random() * 4) + 1; // 1 to 4 moles
+    for (let i = 0; i < numOfMoles; i++) {
+        const hole = getRandomHole();
+        if (!activeHoles.includes(hole)) {
+            hole.classList.add('mole');
+            activeHoles.push(hole);
+        }
     }
-    activeHole = getRandomHole();
-    activeHole.classList.add('mole');
 }
 
-function startGame() {
-    setInterval(showMole, 1000);
+function hideMoles() {
+    activeHoles.forEach(hole => hole.classList.remove('mole'));
+    activeHoles = [];
 }
 
 function hitMole(event) {
     if (event.target.classList.contains('mole')) {
         score++;
         document.getElementById('score').textContent = score;
+        const audio = new Audio('hit-sound.mp3');
+        audio.play();
         event.target.classList.remove('mole');
+        activeHoles = activeHoles.filter(hole => hole !== event.target);
     }
+}
+
+function startGame() {
+    setInterval(showMole, moleAppearanceTime);
+    setTimeout(endGame, gameDuration);
+}
+
+function endGame() {
+    hideMoles();
+    if (score >= 50) {
+        document.getElementById('end-message').classList.remove('hidden');
+    }
+    document.querySelectorAll('.hole').forEach(hole => {
+        hole.removeEventListener('click', hitMole);
+    });
 }
 
 document.querySelectorAll('.hole').forEach(hole => {
