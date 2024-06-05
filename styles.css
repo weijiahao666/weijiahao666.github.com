@@ -6,6 +6,15 @@ body {
     align-items: center;
 }
 
+h1 {
+    margin-top: 20px;
+}
+
+p {
+    margin: 10px 0;
+    text-align: center;
+}
+
 #game {
     display: grid;
     grid-template-columns: repeat(4, 100px);
@@ -17,33 +26,32 @@ body {
     height: 100px;
     background-color: #8B4513;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .mole {
     width: 80px;
     height: 80px;
-    background-image: url('mole.png'); /* 使用地鼠图片 */
+    background-image: url('mole.png');
     background-size: cover;
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .hidden {
     display: none;
 }
 
-#gameOver {
-    text-align: center;
+#end-message {
     margin-top: 20px;
-    animation: fadeIn 2s;
+    font-size: 24px;
+    color: green;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+#restart {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
 }
