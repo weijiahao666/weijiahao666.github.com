@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>打大野兔游戏</title>
+    <title>打地鼠游戏</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>打大野兔游戏</h1>
-    <p>游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得一分。得分超过50分即为游戏通过，注意！！需要一直点击野兔，野兔的数量会逐渐增加。（격자 안의 산토끼를 클릭하여 산토끼를 처치하세요. 산토끼를 한 마리 처치할 때마다 1점을 얻습니다. 점수가 50점을 초과하면 게임을 통과하게 됩니다.) 打倒大资本家魏嘉豪，天网恢恢，疏而不漏。</p>
+    <h1>打地鼠游戏</h1>
+    <p>游戏玩法：点击格子中的野兔来击毙它们，每击毙一个野兔获得一分。得分超过100分即为游戏通过，注意！！需要一直点击野兔，野兔的数量会逐渐增加。（격자 안의 산토끼를 클릭하여 산토끼를 처치하세요. 산토끼를 한 마리 처치할 때마다 1점을 얻습니다. 점수가 50점을 초과하면 게임을 통과하게 됩니다.) 打倒大资本家魏嘉豪，游戏挑战成功，将他绳之以法</p>
     <div id="game">
         <div class="hole" id="hole1"></div>
         <div class="hole" id="hole2"></div>
@@ -25,8 +25,12 @@
     </div>
     <div>
         <p>得分: <span id="score">0</span></p>
+        <button id="restart">重新开始</button>
     </div>
-    <div id="end-message" class="hidden">恭喜你，人生赢家你太棒了！</div>
+    <div id="gameOver" class="hidden">
+        <h2>恭喜你，游戏通过太棒了！</h2>
+        <p>打倒大资本家魏嘉豪，游戏挑战成功，将他绳之以法</p>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
