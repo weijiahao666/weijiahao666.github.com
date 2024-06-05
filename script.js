@@ -1,10 +1,9 @@
 // script.js
 let score = 0;
 let activeHoles = [];
-const gameDuration = 30000; // 30 seconds
-const moleAppearanceTime = 500; // 500 milliseconds
 let gameInterval;
-let endTimeout;
+let gameDuration = 30000; // 30 seconds
+const moleAppearanceTime = 500; // 500 milliseconds, faster speed
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
@@ -32,13 +31,10 @@ function hitMole(event) {
     if (event.target.classList.contains('mole')) {
         score++;
         document.getElementById('score').textContent = score;
-        const audio = document.getElementById('hit-sound');
+        const audio = new Audio('hit-sound.mp3');
         audio.play();
         event.target.classList.remove('mole');
         activeHoles = activeHoles.filter(hole => hole !== event.target);
-        if (score >= 100) {
-            endGame(true);
-        }
     }
 }
 
@@ -46,32 +42,34 @@ function startGame() {
     score = 0;
     document.getElementById('score').textContent = score;
     document.getElementById('end-message').classList.add('hidden');
-    document.getElementById('restart').classList.add('hidden');
-    document.getElementById('start').classList.add('hidden');
+    document.getElementById('restart-button').classList.add('hidden');
     document.getElementById('game').classList.remove('hidden');
     gameInterval = setInterval(showMole, moleAppearanceTime);
-    endTimeout = setTimeout(() => endGame(false), gameDuration);
+    setTimeout(endGame, gameDuration);
 }
 
-function endGame(passed) {
+function endGame() {
     clearInterval(gameInterval);
-    clearTimeout(endTimeout);
     hideMoles();
-    const endSound = document.getElementById('end-sound');
-    endSound.play();
-    const endMessage = document.getElementById('end-message');
-    if (passed) {
-        endMessage.textContent = '恭喜你，游戏通过！';
+    if (score >= 100) {
+        document.getElementById('end-message').textContent = '恭喜你，游戏通过！';
+        document.getElementById('end-message').classList.remove('hidden');
+        const endAudio = new Audio('win-sound.mp3');
+        endAudio.play();
     } else {
-        endMessage.textContent = '游戏结束，重新开始。';
+        document.getElementById('end-message').textContent = '游戏结束，未通过。';
+        document.getElementById('end-message').classList.remove('hidden');
     }
-    endMessage.classList.remove('hidden');
-    document.getElementById('restart').classList.remove('hidden');
+    document.getElementById('restart-button').classList.remove('hidden');
 }
+
+function restartGame() {
+    startGame();
+}
+
+document.getElementById('start-button').addEventListener('click', startGame);
+document.getElementById('restart-button').addEventListener('click', restartGame);
 
 document.querySelectorAll('.hole').forEach(hole => {
     hole.addEventListener('click', hitMole);
 });
-
-document.getElementById('start').addEventListener('click', startGame);
-document.getElementById('restart').addEventListener('click', startGame);
