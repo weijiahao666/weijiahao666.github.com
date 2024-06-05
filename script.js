@@ -63,7 +63,7 @@ function endGame(passed) {
     if (passed) {
         endMessage.textContent = '恭喜你，游戏通过！';
     } else {
-        endMessage.textContent = '游戏结束，得分未达标。';
+        endMessage.textContent = '游戏结束，重新开始。';
     }
     endMessage.classList.remove('hidden');
     document.getElementById('restart').classList.remove('hidden');
