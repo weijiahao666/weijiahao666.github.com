@@ -7,10 +7,12 @@ body {
     flex-direction: column;
     align-items: center;
     color: white;
+    overflow: hidden;
 }
 
 h1, p {
     text-align: center;
+    margin: 10px;
 }
 
 .background {
@@ -25,6 +27,10 @@ h1, p {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 10px;
+    width: calc(100% - 40px);
+    max-width: 600px;
+    margin: 10px;
+    box-sizing: border-box;
 }
 
 .hidden {
@@ -33,23 +39,26 @@ h1, p {
 
 #game {
     display: grid;
-    grid-template-columns: repeat(5, 100px);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
+    width: calc(100% - 40px);
+    max-width: 600px;
+    margin: 10px;
 }
 
 .hole {
-    width: 100px;
-    height: 100px;
-    background-color: #8B4513;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    padding-top: 100%; /* This makes the hole square */
+    background-color: #8B4513;
 }
 
 .mole {
-    width: 80px;
-    height: 80px;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
     background-size: cover;
     border-radius: 50%;
     cursor: pointer;
@@ -76,18 +85,18 @@ button {
 }
 
 @media (max-width: 600px) {
+    .controls, .instructions, .score {
+        width: calc(100% - 20px);
+    }
+
     #game {
-        grid-template-columns: repeat(5, 60px);
+        width: calc(100% - 20px);
         grid-gap: 5px;
     }
 
-    .hole {
-        width: 60px;
-        height: 60px;
-    }
-
-    .mole {
-        width: 50px;
-        height: 50px;
+    button {
+        width: calc(100% - 40px);
+        max-width: 280px;
+        margin: 10px auto;
     }
 }
