@@ -7,19 +7,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="cover-page" class="page">
-        <img src="cover.jpg" alt="封面图片" class="cover-image">
+    <div id="start-page">
+        <img src="cover.jpg" alt="封面图片" id="cover-image">
         <button id="start-button">开始游戏</button>
-        <div>
-            <label for="speed">选择速度：</label>
-            <select id="speed">
-                <option value="slow">慢</option>
-                <option value="fast">快</option>
-            </select>
-        </div>
+        <button id="difficulty-button">选择难度：简单</button>
+        <button id="speed-button">选择速度：慢</button>
     </div>
-
-    <div id="game-page" class="page hidden">
+    
+    <div id="game-page" class="hidden">
         <h1>打野兔游戏</h1>
         <p>游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得1分。得分超过100分即为游戏通过。注意！！需要一直点击野兔，野兔的数量会逐渐增加。</p>
         <div id="game">
@@ -39,8 +34,8 @@
         <div>
             <p>得分: <span id="score">0</span></p>
         </div>
-        <button id="restart-button" class="hidden">重新开始</button>
         <div id="end-message" class="hidden">恭喜你，游戏通过！</div>
+        <button id="restart-button" class="hidden">重新开始，别灰心，加油</button>
     </div>
     <script src="script.js"></script>
 </body>
