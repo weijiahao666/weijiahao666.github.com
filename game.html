@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打野兔游戏</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="game-bg">
+    <h1>打野兔游戏</h1>
+    <p class="instructions">游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得1分。得分超过100分即为游戏通过。</p>
+    <div id="controls">
+        <button id="easy-mode">简单</button>
+        <button id="hard-mode">困难</button>
+        <button id="slow-speed">慢速</button>
+        <button id="fast-speed">快速</button>
+    </div>
+    <div id="game">
+        <div class="hole" id="hole1"></div>
+        <div class="hole" id="hole2"></div>
+        <div class="hole" id="hole3"></div>
+        <div class="hole" id="hole4"></div>
+        <div class="hole" id="hole5"></div>
+        <div class="hole" id="hole6"></div>
+        <div class="hole" id="hole7"></div>
+        <div class="hole" id="hole8"></div>
+        <div class="hole" id="hole9"></div>
+        <div class="hole" id="hole10"></div>
+        <div class="hole" id="hole11"></div>
+        <div class="hole" id="hole12"></div>
+    </div>
+    <div>
+        <p>得分: <span id="score">0</span></p>
+    </div>
+    <div id="end-message" class="hidden">恭喜你，游戏通过！</div>
+    <button id="restart-game" class="hidden">重新开始</button>
+    <script src="script.js"></script>
+</body>
+</html>
