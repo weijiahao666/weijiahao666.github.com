@@ -33,26 +33,22 @@ h1, p {
 
 #game {
     display: grid;
-    grid-template-columns: repeat(3, 150px);
+    grid-template-columns: repeat(3, 33.33%);
+    grid-template-rows: repeat(4, 100px); /* 格子高度调整为100px */
     grid-gap: 10px;
+    width: 100%; /* 让游戏区域填满屏幕宽度 */
+    height: 100%; /* 让游戏区域填满屏幕高度 */
 }
 
 .hole {
-    width: 150px;
-    height: 150px;
     background-color: #8B4513;
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.mole {
-    width: 120px;
-    height: 120px;
-    background-image: url('mole.png');
-    background-size: cover;
-    border-radius: 50%;
+    background-image: url('mole.png'); /* 地鼠图片 */
+    background-size: 80%; /* 地鼠图片大小 */
+    background-repeat: no-repeat; /* 防止地鼠图片重复 */
+    background-position: center; /* 地鼠图片居中 */
     cursor: pointer;
 }
 
@@ -78,17 +74,10 @@ button {
 
 @media (max-width: 600px) {
     #game {
-        grid-template-columns: repeat(3, 100px);
-        grid-gap: 5px;
+        grid-template-rows: repeat(4, 75px); /* 格子高度调整为75px */
     }
 
     .hole {
-        width: 100px;
-        height: 100px;
-    }
-
-    .mole {
-        width: 80px;
-        height: 80px;
+        background-size: 60%; /* 地鼠图片大小 */
     }
 }
