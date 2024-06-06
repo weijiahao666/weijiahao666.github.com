@@ -6,15 +6,49 @@
     <title>打野兔游戏</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="cover">
-    <div class="cover-content">
+<body>
+    <div id="start-page">
+        <img src="start-background.jpg" alt="Start Background" class="background">
         <h1>打野兔游戏</h1>
-        <button id="start-game">开始游戏</button>
+        <div class="controls">
+            <label for="speed">选择游戏速度:</label>
+            <select id="speed">
+                <option value="slow">慢</option>
+                <option value="fast">快</option>
+            </select>
+            <label for="difficulty">选择游戏难度:</label>
+            <select id="difficulty">
+                <option value="easy">简单</option>
+                <option value="hard">困难</option>
+            </select>
+            <button id="start-game">开始游戏</button>
+        </div>
     </div>
-    <script>
-        document.getElementById('start-game').addEventListener('click', () => {
-            window.location.href = 'game.html';
-        });
-    </script>
+
+    <div id="game-page" class="hidden">
+        <img src="game-background.jpg" alt="Game Background" class="background">
+        <h1>打野兔游戏</h1>
+        <p class="instructions">游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得1分。得分超过100分即为游戏通过。注意！！需要一直点击野兔，野兔的数量会逐渐增加</p>
+        <div id="game">
+            <div class="hole" id="hole1"></div>
+            <div class="hole" id="hole2"></div>
+            <div class="hole" id="hole3"></div>
+            <div class="hole" id="hole4"></div>
+            <div class="hole" id="hole5"></div>
+            <div class="hole" id="hole6"></div>
+            <div class="hole" id="hole7"></div>
+            <div class="hole" id="hole8"></div>
+            <div class="hole" id="hole9"></div>
+            <div class="hole" id="hole10"></div>
+            <div class="hole" id="hole11"></div>
+            <div class="hole" id="hole12"></div>
+        </div>
+        <div>
+            <p class="score">得分: <span id="score">0</span></p>
+        </div>
+        <div id="end-message" class="hidden">恭喜你，游戏通过！</div>
+        <button id="restart-game" class="hidden">重新开始</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
