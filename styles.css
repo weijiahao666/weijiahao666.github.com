@@ -1,34 +1,45 @@
 /* styles.css */
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-size: cover;
-}
-
-#start-page {
-    background-image: url('start-background.jpg');
-}
-
-#game-page {
-    background-image: url('game-background.jpg');
-}
-
-h1, p, .instructions {
     color: white;
+}
+
+h1, p {
+    text-align: center;
+}
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.controls, .instructions, .score {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.hidden {
+    display: none;
 }
 
 #game {
     display: grid;
-    grid-template-columns: repeat(5, 70px);
+    grid-template-columns: repeat(4, 100px);
     grid-gap: 10px;
-    margin-top: 20px;
 }
 
 .hole {
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
     background-color: #8B4513;
     position: relative;
     display: flex;
@@ -37,25 +48,10 @@ h1, p, .instructions {
 }
 
 .mole {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     background-size: cover;
     border-radius: 50%;
-    cursor: pointer;
-}
-
-.hidden {
-    display: none;
-}
-
-.game-settings {
-    margin: 10px 0;
-}
-
-button {
-    padding: 10px;
-    margin: 5px;
-    font-size: 16px;
     cursor: pointer;
 }
 
@@ -63,4 +59,35 @@ button {
     margin-top: 20px;
     font-size: 24px;
     color: green;
+}
+
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+    #game {
+        grid-template-columns: repeat(4, 75px);
+        grid-gap: 5px;
+    }
+
+    .hole {
+        width: 75px;
+        height: 75px;
+    }
+
+    .mole {
+        width: 60px;
+        height: 60px;
+    }
 }
