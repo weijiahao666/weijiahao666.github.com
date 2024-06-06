@@ -6,23 +6,7 @@ body {
     align-items: center;
     background-image: url('background.jpg');
     background-size: cover;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    justify-content: center;
-}
-
-.page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-}
-
-.hidden {
-    display: none;
+    color: white;
 }
 
 h1 {
@@ -36,13 +20,13 @@ p {
 
 #game {
     display: grid;
-    grid-template-columns: repeat(4, 80px);
+    grid-template-columns: repeat(4, 100px);
     grid-gap: 10px;
 }
 
 .hole {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     background-color: #8B4513;
     position: relative;
     display: flex;
@@ -51,21 +35,54 @@ p {
 }
 
 .mole {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     background-size: cover;
     border-radius: 50%;
     cursor: pointer;
 }
 
-.cover-image {
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;
+.hidden {
+    display: none;
+}
+
+#start-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#cover-image {
+    max-width: 100%;
+    height: auto;
 }
 
 button {
-    padding: 10px 20px;
     margin: 10px;
-    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#end-message {
+    margin-top: 20px;
+    font-size: 24px;
+    color: green;
+}
+
+@media (max-width: 600px) {
+    #game {
+        grid-template-columns: repeat(3, 80px);
+        grid-gap: 8px;
+    }
+    .hole {
+        width: 80px;
+        height: 80px;
+    }
+    .mole {
+        width: 60px;
+        height: 60px;
+    }
+    button {
+        font-size: 14px;
+    }
 }
