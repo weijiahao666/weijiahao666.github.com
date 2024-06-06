@@ -7,12 +7,10 @@ body {
     flex-direction: column;
     align-items: center;
     color: white;
-    overflow: hidden;
 }
 
-h1, p {
+h1, p, h2 {
     text-align: center;
-    margin: 10px;
 }
 
 .background {
@@ -23,14 +21,10 @@ h1, p {
     z-index: -1;
 }
 
-.controls, .instructions, .score {
+.controls, .instructions, .score, #end-message, #scoreboard {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 10px;
-    width: calc(100% - 40px);
-    max-width: 600px;
-    margin: 10px;
-    box-sizing: border-box;
 }
 
 .hidden {
@@ -39,26 +33,23 @@ h1, p {
 
 #game {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 150px);
     grid-gap: 10px;
-    width: calc(100% - 40px);
-    max-width: 600px;
-    margin: 10px;
 }
 
 .hole {
-    position: relative;
-    width: 100%;
-    padding-top: 100%; /* This makes the hole square */
+    width: 150px;
+    height: 150px;
     background-color: #8B4513;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .mole {
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    width: 80%;
-    height: 80%;
+    width: 120px;
+    height: 120px;
     background-size: cover;
     border-radius: 50%;
     cursor: pointer;
@@ -85,18 +76,18 @@ button {
 }
 
 @media (max-width: 600px) {
-    .controls, .instructions, .score {
-        width: calc(100% - 20px);
-    }
-
     #game {
-        width: calc(100% - 20px);
+        grid-template-columns: repeat(4, 100px);
         grid-gap: 5px;
     }
 
-    button {
-        width: calc(100% - 40px);
-        max-width: 280px;
-        margin: 10px auto;
+    .hole {
+        width: 100px;
+        height: 100px;
+    }
+
+    .mole {
+        width: 80px;
+        height: 80px;
     }
 }
