@@ -33,22 +33,28 @@ h1, p {
 
 #game {
     display: grid;
-    grid-template-columns: repeat(3, 33.33%);
-    grid-template-rows: repeat(4, 100px); /* 格子高度调整为100px */
+    grid-template-columns: repeat(3, calc(33.33vw - 20px)); /* 3 columns with 20px gap between them */
     grid-gap: 10px;
-    width: 100%; /* 让游戏区域填满屏幕宽度 */
-    height: 100%; /* 让游戏区域填满屏幕高度 */
+    width: 100%;
+    max-width: 600px; /* Limit maximum width to 600px */
 }
 
 .hole {
+    width: calc(33.33vw - 20px); /* Adjusted width for grid columns */
+    height: calc(33.33vw - 20px); /* Adjusted height for grid columns */
     background-color: #8B4513;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('mole.png'); /* 野兔图片 */
-    background-size: 80%; /* 野兔图片大小 */
-    background-repeat: no-repeat; /* 防止野兔图片重复 */
-    background-position: center; /* 野兔图片居中 */
+}
+
+.mole {
+    width: 80px; /* Adjust the size of the mole image */
+    height: 80px; /* Adjust the size of the mole image */
+    background-size: contain; /* Adjust background size to fit the hole */
+    background-repeat: no-repeat; /* Prevent repeating background */
+    background-position: center; /* Center the background image */
     cursor: pointer;
 }
 
@@ -74,10 +80,17 @@ button {
 
 @media (max-width: 600px) {
     #game {
-        grid-template-rows: repeat(4, 75px); /* 格子高度调整为75px */
+        grid-template-columns: repeat(3, calc(33.33vw - 10px)); /* Adjusted columns for small screens */
+        grid-gap: 5px; /* Adjusted gap for small screens */
     }
 
     .hole {
-        background-size: 60%; /* 野兔图片大小 */
+        width: calc(33.33vw - 10px); /* Adjusted width for small screens */
+        height: calc(33.33vw - 10px); /* Adjusted height for small screens */
+    }
+
+    .mole {
+        width: 60px; /* Adjusted mole size for small screens */
+        height: 60px; /* Adjusted mole size for small screens */
     }
 }
