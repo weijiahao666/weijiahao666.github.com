@@ -1,9 +1,19 @@
 // script.js
 let score = 0;
 let activeHoles = [];
+let moleAppearanceTime = 1000;
 let gameInterval;
-let gameDuration = 30000; // 30 seconds
-const moleAppearanceTime = 500; // 500 milliseconds, faster speed
+let moleImages = [
+    'mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'
+];
+
+const startButton = document.getElementById('start-button');
+const restartButton = document.getElementById('restart-button');
+const coverPage = document.getElementById('cover-page');
+const gamePage = document.getElementById('game-page');
+const scoreDisplay = document.getElementById('score');
+const endMessage = document.getElementById('end-message');
+const speedSelect = document.getElementById('speed');
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
@@ -16,6 +26,8 @@ function showMole() {
     for (let i = 0; i < numOfMoles; i++) {
         const hole = getRandomHole();
         if (!activeHoles.includes(hole)) {
+            const moleImage = moleImages[Math.floor(Math.random() * moleImages.length)];
+            hole.style.backgroundImage = `url(${moleImage})`;
             hole.classList.add('mole');
             activeHoles.push(hole);
         }
@@ -23,53 +35,66 @@ function showMole() {
 }
 
 function hideMoles() {
-    activeHoles.forEach(hole => hole.classList.remove('mole'));
+    activeHoles.forEach(hole => {
+        hole.classList.remove('mole');
+        hole.style.backgroundImage = '';
+    });
     activeHoles = [];
 }
 
 function hitMole(event) {
     if (event.target.classList.contains('mole')) {
         score++;
-        document.getElementById('score').textContent = score;
+        scoreDisplay.textContent = score;
         const audio = new Audio('hit-sound.mp3');
         audio.play();
         event.target.classList.remove('mole');
+        event.target.style.backgroundImage = '';
         activeHoles = activeHoles.filter(hole => hole !== event.target);
+
+        if (score >= 100) {
+            endGame();
+        }
     }
 }
 
 function startGame() {
+    coverPage.classList.add('hidden');
+    gamePage.classList.remove('hidden');
     score = 0;
-    document.getElementById('score').textContent = score;
-    document.getElementById('end-message').classList.add('hidden');
-    document.getElementById('restart-button').classList.add('hidden');
-    document.getElementById('game').classList.remove('hidden');
+    scoreDisplay.textContent = score;
     gameInterval = setInterval(showMole, moleAppearanceTime);
-    setTimeout(endGame, gameDuration);
+    document.querySelectorAll('.hole').forEach(hole => {
+        hole.addEventListener('click', hitMole);
+    });
 }
 
 function endGame() {
     clearInterval(gameInterval);
     hideMoles();
     if (score >= 100) {
-        document.getElementById('end-message').textContent = '恭喜你，游戏通过！';
-        document.getElementById('end-message').classList.remove('hidden');
-        const endAudio = new Audio('win-sound.mp3');
+        endMessage.classList.remove('hidden');
+        const endAudio = new Audio('end-sound.mp3');
         endAudio.play();
-    } else {
-        document.getElementById('end-message').textContent = '游戏结束，未通过。';
-        document.getElementById('end-message').classList.remove('hidden');
     }
-    document.getElementById('restart-button').classList.remove('hidden');
+    restartButton.classList.remove('hidden');
+    document.querySelectorAll('.hole').forEach(hole => {
+        hole.removeEventListener('click', hitMole);
+    });
 }
 
 function restartGame() {
-    startGame();
+    score = 0;
+    scoreDisplay.textContent = score;
+    endMessage.classList.add('hidden');
+    restartButton.classList.add('hidden');
+    gameInterval = setInterval(showMole, moleAppearanceTime);
 }
 
-document.getElementById('start-button').addEventListener('click', startGame);
-document.getElementById('restart-button').addEventListener('click', restartGame);
-
-document.querySelectorAll('.hole').forEach(hole => {
-    hole.addEventListener('click', hitMole);
+startButton.addEventListener('click', () => {
+    const speed = speedSelect.value;
+    moleAppearanceTime = (speed === 'fast') ? 500 : 1000;
+    startGame();
 });
+
+restartButton.addEventListener('click', restartGame);
