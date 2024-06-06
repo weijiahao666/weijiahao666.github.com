@@ -2,8 +2,8 @@
 let score = 0;
 let activeHoles = [];
 let gameInterval;
-let moleAppearanceTime = 1000; // Default 1000ms
-let difficulty = 'easy'; // Default difficulty
+let gameDuration;
+let moleAppearanceTime;
 const moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
 
 function getRandomHole() {
@@ -11,17 +11,14 @@ function getRandomHole() {
     return holes[Math.floor(Math.random() * holes.length)];
 }
 
-function getRandomMoleImage() {
-    return moleImages[Math.floor(Math.random() * moleImages.length)];
-}
-
 function showMole() {
     hideMoles();
-    const numOfMoles = Math.floor(Math.random() * (difficulty === 'easy' ? 3 : 6)) + 1; // 1 to 3 moles for easy, 1 to 6 for hard
+    const numOfMoles = Math.floor(Math.random() * (difficulty === 'easy' ? 2 : 4)) + 1; // 1 to 2 for easy, 1 to 4 for hard
     for (let i = 0; i < numOfMoles; i++) {
         const hole = getRandomHole();
         if (!activeHoles.includes(hole)) {
-            hole.style.backgroundImage = `url(${getRandomMoleImage()})`;
+            const moleImg = moleImages[Math.floor(Math.random() * moleImages.length)];
+            hole.style.backgroundImage = `url(${moleImg})`;
             hole.classList.add('mole');
             activeHoles.push(hole);
         }
@@ -45,31 +42,45 @@ function hitMole(event) {
         event.target.classList.remove('mole');
         event.target.style.backgroundImage = '';
         activeHoles = activeHoles.filter(hole => hole !== event.target);
-        if (score >= 100) {
-            endGame(true);
-        }
     }
 }
 
 function startGame() {
+    const speed = document.getElementById('speed').value;
+    const difficulty = document.getElementById('difficulty').value;
+
+    moleAppearanceTime = speed === 'slow' ? 1000 : 600; // Slow: 1000ms, Fast: 600ms
+    gameDuration = difficulty === 'easy' ? 60000 : 30000; // Easy: 60s, Hard: 30s
+
     gameInterval = setInterval(showMole, moleAppearanceTime);
-    setTimeout(endGame, 30000); // 30 seconds game duration
+    setTimeout(endGame, gameDuration);
 }
 
-function endGame(success = false) {
+function endGame() {
     clearInterval(gameInterval);
     hideMoles();
-    if (success) {
+    if (score >= 100) {
         document.getElementById('end-message').classList.remove('hidden');
-        const endAudio = new Audio('success-sound.mp3');
-        endAudio.play();
+        const audio = new Audio('end-sound.mp3');
+        audio.play();
     }
+    document.querySelectorAll('.hole').forEach(hole => {
+        hole.removeEventListener('click', hitMole);
+    });
     document.getElementById('restart-button').classList.remove('hidden');
 }
 
-document.querySelectorAll('.hole').forEach(hole => {
-    hole.addEventListener('click', hitMole);
-});
+function restartGame() {
+    score = 0;
+    document.getElementById('score').textContent = score;
+    document.getElementById('end-message').classList.add('hidden');
+    document.getElementById('restart-button').classList.add('hidden');
+    document.getElementById('game-page').classList.add('hidden');
+    document.getElementById('start-page').classList.remove('hidden');
+    document.querySelectorAll('.hole').forEach(hole => {
+        hole.addEventListener('click', hitMole);
+    });
+}
 
 document.getElementById('start-button').addEventListener('click', () => {
     document.getElementById('start-page').classList.add('hidden');
@@ -77,31 +88,8 @@ document.getElementById('start-button').addEventListener('click', () => {
     startGame();
 });
 
-document.getElementById('restart-button').addEventListener('click', () => {
-    document.getElementById('start-page').classList.remove('hidden');
-    document.getElementById('game-page').classList.add('hidden');
-    document.getElementById('end-message').classList.add('hidden');
-    document.getElementById('restart-button').classList.add('hidden');
-    score = 0;
-    document.getElementById('score').textContent = score;
-});
+document.getElementById('restart-button').addEventListener('click', restartGame);
 
-document.getElementById('difficulty-button').addEventListener('click', () => {
-    if (difficulty === 'easy') {
-        difficulty = 'hard';
-        document.getElementById('difficulty-button').textContent = '选择难度：困难';
-    } else {
-        difficulty = 'easy';
-        document.getElementById('difficulty-button').textContent = '选择难度：简单';
-    }
-});
-
-document.getElementById('speed-button').addEventListener('click', () => {
-    if (moleAppearanceTime === 1000) {
-        moleAppearanceTime = 500;
-        document.getElementById('speed-button').textContent = '选择速度：快';
-    } else {
-        moleAppearanceTime = 1000;
-        document.getElementById('speed-button').textContent = '选择速度：慢';
-    }
+document.querySelectorAll('.hole').forEach(hole => {
+    hole.addEventListener('click', hitMole);
 });
