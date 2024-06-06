@@ -9,7 +9,7 @@ body {
     color: white;
 }
 
-h1, p, h2 {
+h1, p {
     text-align: center;
 }
 
@@ -21,7 +21,7 @@ h1, p, h2 {
     z-index: -1;
 }
 
-.controls, .instructions, .score, #end-message, #scoreboard {
+.controls, .instructions, .score {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 10px;
@@ -33,13 +33,13 @@ h1, p, h2 {
 
 #game {
     display: grid;
-    grid-template-columns: repeat(4, 150px);
+    grid-template-columns: repeat(4, 120px);
     grid-gap: 10px;
 }
 
 .hole {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     background-color: #8B4513;
     position: relative;
     display: flex;
@@ -48,8 +48,8 @@ h1, p, h2 {
 }
 
 .mole {
-    width: 120px;
-    height: 120px;
+    width: 80%;
+    height: 80%;
     background-size: cover;
     border-radius: 50%;
     cursor: pointer;
@@ -77,17 +77,17 @@ button {
 
 @media (max-width: 600px) {
     #game {
-        grid-template-columns: repeat(4, 100px);
+        grid-template-columns: repeat(4, 80px);
         grid-gap: 5px;
     }
 
     .hole {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
     }
 
     .mole {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
     }
 }
