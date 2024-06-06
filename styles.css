@@ -33,13 +33,13 @@ h1, p {
 
 #game {
     display: grid;
-    grid-template-columns: repeat(4, 150px); /* Increase size of the holes */
-    grid-gap: 15px;
+    grid-template-columns: repeat(5, 100px);
+    grid-gap: 10px;
 }
 
 .hole {
-    width: 150px; /* Increase size of the holes */
-    height: 150px; /* Increase size of the holes */
+    width: 100px;
+    height: 100px;
     background-color: #8B4513;
     position: relative;
     display: flex;
@@ -48,8 +48,8 @@ h1, p {
 }
 
 .mole {
-    width: 120px; /* Increase size of the mole */
-    height: 120px; /* Increase size of the mole */
+    width: 80px;
+    height: 80px;
     background-size: cover;
     border-radius: 50%;
     cursor: pointer;
@@ -77,17 +77,17 @@ button {
 
 @media (max-width: 600px) {
     #game {
-        grid-template-columns: repeat(4, 100px); /* Adjust size for small screens */
-        grid-gap: 10px;
+        grid-template-columns: repeat(5, 60px);
+        grid-gap: 5px;
     }
 
     .hole {
-        width: 100px; /* Adjust size for small screens */
-        height: 100px; /* Adjust size for small screens */
+        width: 60px;
+        height: 60px;
     }
 
     .mole {
-        width: 80px; /* Adjust size for small screens */
-        height: 80px; /* Adjust size for small screens */
+        width: 50px;
+        height: 50px;
     }
 }
