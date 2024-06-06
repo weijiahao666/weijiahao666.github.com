@@ -7,29 +7,41 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>打野兔游戏</h1>
-    <p>游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得一分。得分超过100分即为游戏通过，注意！！需要一直点击野兔，野兔的数量会逐渐增加。（격자 안의 산토끼를 클릭하여 산토끼를 처치하세요. 산토끼를 한 마리 처치할 때마다 1점을 얻습니다. 점수가 100점을 초과하면 게임을 통과하게 됩니다.) 打倒大资本家魏嘉豪，将他绳之以法。                                                                           
-</p>
-    <button id="start-button">开始游戏</button>
-    <div id="game" class="hidden">
-        <div class="hole" id="hole1"></div>
-        <div class="hole" id="hole2"></div>
-        <div class="hole" id="hole3"></div>
-        <div class="hole" id="hole4"></div>
-        <div class="hole" id="hole5"></div>
-        <div class="hole" id="hole6"></div>
-        <div class="hole" id="hole7"></div>
-        <div class="hole" id="hole8"></div>
-        <div class="hole" id="hole9"></div>
-        <div class="hole" id="hole10"></div>
-        <div class="hole" id="hole11"></div>
-        <div class="hole" id="hole12"></div>
+    <div id="cover-page" class="page">
+        <img src="cover.jpg" alt="封面图片" class="cover-image">
+        <button id="start-button">开始游戏</button>
+        <div>
+            <label for="speed">选择速度：</label>
+            <select id="speed">
+                <option value="slow">慢</option>
+                <option value="fast">快</option>
+            </select>
+        </div>
     </div>
-    <div>
-        <p>得分: <span id="score">0</span></p>
+
+    <div id="game-page" class="page hidden">
+        <h1>打野兔游戏</h1>
+        <p>游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得1分。得分超过100分即为游戏通过。</p>
+        <div id="game">
+            <div class="hole" id="hole1"></div>
+            <div class="hole" id="hole2"></div>
+            <div class="hole" id="hole3"></div>
+            <div class="hole" id="hole4"></div>
+            <div class="hole" id="hole5"></div>
+            <div class="hole" id="hole6"></div>
+            <div class="hole" id="hole7"></div>
+            <div class="hole" id="hole8"></div>
+            <div class="hole" id="hole9"></div>
+            <div class="hole" id="hole10"></div>
+            <div class="hole" id="hole11"></div>
+            <div class="hole" id="hole12"></div>
+        </div>
+        <div>
+            <p>得分: <span id="score">0</span></p>
+        </div>
+        <button id="restart-button" class="hidden">重新开始</button>
+        <div id="end-message" class="hidden">恭喜你，游戏通过！</div>
     </div>
-    <div id="end-message" class="hidden">恭喜你，游戏通过！</div>
-    <button id="restart-button" class="hidden">重新开始</button>
     <script src="script.js"></script>
 </body>
 </html>
