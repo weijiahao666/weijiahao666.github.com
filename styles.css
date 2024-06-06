@@ -45,10 +45,10 @@ h1, p {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('mole.png'); /* 地鼠图片 */
-    background-size: 80%; /* 地鼠图片大小 */
-    background-repeat: no-repeat; /* 防止地鼠图片重复 */
-    background-position: center; /* 地鼠图片居中 */
+    background-image: url('mole.png'); /* 野兔图片 */
+    background-size: 80%; /* 野兔图片大小 */
+    background-repeat: no-repeat; /* 防止野兔图片重复 */
+    background-position: center; /* 野兔图片居中 */
     cursor: pointer;
 }
 
@@ -78,6 +78,6 @@ button {
     }
 
     .hole {
-        background-size: 60%; /* 地鼠图片大小 */
+        background-size: 60%; /* 野兔图片大小 */
     }
 }
