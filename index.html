@@ -8,15 +8,25 @@
 </head>
 <body>
     <div id="start-page">
-        <img src="cover.jpg" alt="封面图片" id="cover-image">
-        <button id="start-button">开始游戏</button>
-        <button id="difficulty-button">选择难度：简单</button>
-        <button id="speed-button">选择速度：慢</button>
+        <img src="cover.jpg" alt="游戏封面" class="cover-image">
+        <button id="start-button" class="start-btn">开始游戏</button>
+        <div class="options">
+            <label for="speed">游戏速度:</label>
+            <select id="speed">
+                <option value="slow">慢</option>
+                <option value="fast">快</option>
+            </select>
+            <label for="difficulty">游戏难度:</label>
+            <select id="difficulty">
+                <option value="easy">简单</option>
+                <option value="hard">困难</option>
+            </select>
+        </div>
     </div>
     
     <div id="game-page" class="hidden">
         <h1>打野兔游戏</h1>
-        <p>游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得1分。得分超过100分即为游戏通过。注意！！需要一直点击野兔，野兔的数量会逐渐增加。</p>
+        <p class="instructions">游戏玩法说明：点击格子中的野兔，来击毙它们，每击毙一个地鼠获得1分。得分超过100分即为游戏通过。注意！！需要一直点击野兔，野兔的数量会逐渐增加。</p>
         <div id="game">
             <div class="hole" id="hole1"></div>
             <div class="hole" id="hole2"></div>
@@ -35,8 +45,9 @@
             <p>得分: <span id="score">0</span></p>
         </div>
         <div id="end-message" class="hidden">恭喜你，游戏通过！</div>
-        <button id="restart-button" class="hidden">重新开始，别灰心，加油</button>
+        <button id="restart-button" class="hidden restart-btn">重新开始</button>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
