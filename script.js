@@ -1,11 +1,9 @@
-// game.js
+// script.js
 let score = 0;
 let activeHoles = [];
-let gameSpeed = localStorage.getItem('gameSpeed');
-let gameDifficulty = localStorage.getItem('gameDifficulty');
-
-const moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
-const gameDuration = 60000; // 1 minute
+let moleAppearanceTime = 800;
+let gameDuration = 30000; // 30 seconds by default
+let moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
@@ -14,7 +12,7 @@ function getRandomHole() {
 
 function showMole() {
     hideMoles();
-    const numOfMoles = Math.floor(Math.random() * gameDifficulty) + 1; // 1 to gameDifficulty moles
+    const numOfMoles = Math.floor(Math.random() * 4) + 1; // 1 to 4 moles
     for (let i = 0; i < numOfMoles; i++) {
         const hole = getRandomHole();
         if (!activeHoles.includes(hole)) {
@@ -29,7 +27,7 @@ function showMole() {
 function hideMoles() {
     activeHoles.forEach(hole => {
         hole.classList.remove('mole');
-        hole.style.backgroundImage = 'none';
+        hole.style.backgroundImage = '';
     });
     activeHoles = [];
 }
@@ -41,13 +39,17 @@ function hitMole(event) {
         const audio = new Audio('hit-sound.mp3');
         audio.play();
         event.target.classList.remove('mole');
-        event.target.style.backgroundImage = 'none';
+        event.target.style.backgroundImage = '';
         activeHoles = activeHoles.filter(hole => hole !== event.target);
     }
 }
 
 function startGame() {
-    setInterval(showMole, gameSpeed);
+    score = 0;
+    document.getElementById('score').textContent = score;
+    document.getElementById('end-message').classList.add('hidden');
+    document.getElementById('restart-game').classList.add('hidden');
+    setInterval(showMole, moleAppearanceTime);
     setTimeout(endGame, gameDuration);
 }
 
@@ -55,21 +57,33 @@ function endGame() {
     hideMoles();
     if (score >= 100) {
         document.getElementById('end-message').classList.remove('hidden');
-        const audio = new Audio('success-sound.mp3');
-        audio.play();
+        const endAudio = new Audio('end-sound.mp3');
+        endAudio.play();
+        // Add end animation code here
     }
-    document.getElementById('restart-button').classList.remove('hidden');
+    document.getElementById('restart-game').classList.remove('hidden');
     document.querySelectorAll('.hole').forEach(hole => {
         hole.removeEventListener('click', hitMole);
     });
 }
 
-document.getElementById('restart-button').addEventListener('click', () => {
-    window.location.href = 'index.html';
-});
-
 document.querySelectorAll('.hole').forEach(hole => {
     hole.addEventListener('click', hitMole);
 });
 
-startGame();
+document.getElementById('start-game').addEventListener('click', () => {
+    const speed = document.getElementById('speed').value;
+    const difficulty = document.getElementById('difficulty').value;
+
+    moleAppearanceTime = speed === 'fast' ? 600 : 1000;
+    gameDuration = difficulty === 'hard' ? 20000 : 30000;
+
+    document.getElementById('start-page').classList.add('hidden');
+    document.getElementById('game-page').classList.remove('hidden');
+    startGame();
+});
+
+document.getElementById('restart-game').addEventListener('click', () => {
+    document.getElementById('game-page').classList.add('hidden');
+    document.getElementById('start-page').classList.remove('hidden');
+});
