@@ -1,23 +1,32 @@
 // script.js
 let score = 0;
 let activeHoles = [];
+let moleAppearanceTime = 1000; // Default to 1 second
 let gameInterval;
-let gameDuration;
-let moleAppearanceTime;
-const moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
+let moleImages = [
+    'mole1.png',
+    'mole2.png',
+    'mole3.png',
+    'mole4.png',
+    'mole5.png'
+];
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
     return holes[Math.floor(Math.random() * holes.length)];
 }
 
+function getRandomMoleImage() {
+    return moleImages[Math.floor(Math.random() * moleImages.length)];
+}
+
 function showMole() {
     hideMoles();
-    const numOfMoles = Math.floor(Math.random() * (difficulty === 'easy' ? 2 : 4)) + 1; // 1 to 2 for easy, 1 to 4 for hard
+    const numOfMoles = Math.floor(Math.random() * 4) + 1; // 1 to 4 moles
     for (let i = 0; i < numOfMoles; i++) {
         const hole = getRandomHole();
         if (!activeHoles.includes(hole)) {
-            const moleImg = moleImages[Math.floor(Math.random() * moleImages.length)];
+            const moleImg = getRandomMoleImage();
             hole.style.backgroundImage = `url(${moleImg})`;
             hole.classList.add('mole');
             activeHoles.push(hole);
@@ -46,50 +55,55 @@ function hitMole(event) {
 }
 
 function startGame() {
-    const speed = document.getElementById('speed').value;
-    const difficulty = document.getElementById('difficulty').value;
-
-    moleAppearanceTime = speed === 'slow' ? 1000 : 600; // Slow: 1000ms, Fast: 600ms
-    gameDuration = difficulty === 'easy' ? 60000 : 30000; // Easy: 60s, Hard: 30s
-
+    score = 0;
+    document.getElementById('score').textContent = score;
     gameInterval = setInterval(showMole, moleAppearanceTime);
-    setTimeout(endGame, gameDuration);
+    setTimeout(endGame, 30000); // End game after 30 seconds
 }
 
 function endGame() {
     clearInterval(gameInterval);
     hideMoles();
     if (score >= 100) {
+        document.getElementById('end-message').textContent = '恭喜你，游戏通过！';
         document.getElementById('end-message').classList.remove('hidden');
-        const audio = new Audio('end-sound.mp3');
-        audio.play();
+    } else {
+        document.getElementById('end-message').textContent = '很遗憾，游戏失败。';
+        document.getElementById('end-message').classList.remove('hidden');
     }
-    document.querySelectorAll('.hole').forEach(hole => {
-        hole.removeEventListener('click', hitMole);
-    });
-    document.getElementById('restart-button').classList.remove('hidden');
+    document.getElementById('restart-game').classList.remove('hidden');
+    const endAudio = new Audio('end-sound.mp3');
+    endAudio.play();
 }
 
-function restartGame() {
+function resetGame() {
     score = 0;
     document.getElementById('score').textContent = score;
     document.getElementById('end-message').classList.add('hidden');
-    document.getElementById('restart-button').classList.add('hidden');
-    document.getElementById('game-page').classList.add('hidden');
-    document.getElementById('start-page').classList.remove('hidden');
-    document.querySelectorAll('.hole').forEach(hole => {
-        hole.addEventListener('click', hitMole);
-    });
+    document.getElementById('restart-game').classList.add('hidden');
+    window.location.href = 'index.html';
 }
-
-document.getElementById('start-button').addEventListener('click', () => {
-    document.getElementById('start-page').classList.add('hidden');
-    document.getElementById('game-page').classList.remove('hidden');
-    startGame();
-});
-
-document.getElementById('restart-button').addEventListener('click', restartGame);
 
 document.querySelectorAll('.hole').forEach(hole => {
     hole.addEventListener('click', hitMole);
 });
+
+document.getElementById('easy-mode').addEventListener('click', () => {
+    moleAppearanceTime = 1000; // 1 second
+    startGame();
+});
+
+document.getElementById('hard-mode').addEventListener('click', () => {
+    moleAppearanceTime = 500; // 0.5 second
+    startGame();
+});
+
+document.getElementById('slow-speed').addEventListener('click', () => {
+    moleAppearanceTime = 1000; // 1 second
+});
+
+document.getElementById('fast-speed').addEventListener('click', () => {
+    moleAppearanceTime = 500; // 0.5 second
+});
+
+document.getElementById('restart-game').addEventListener('click', resetGame);
