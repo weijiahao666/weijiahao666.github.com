@@ -4,9 +4,6 @@ let activeHoles = [];
 let moleAppearanceTime = 800;
 let gameDuration = 30000; // 30 seconds by default
 let moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
-let rankings = [];
-let gameInterval;
-let gameTimeout;
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
@@ -52,13 +49,11 @@ function startGame() {
     document.getElementById('score').textContent = score;
     document.getElementById('end-message').classList.add('hidden');
     document.getElementById('restart-game').classList.add('hidden');
-    gameInterval = setInterval(showMole, moleAppearanceTime);
-    gameTimeout = setTimeout(endGame, gameDuration);
+    setInterval(showMole, moleAppearanceTime);
+    setTimeout(endGame, gameDuration);
 }
 
 function endGame() {
-    clearInterval(gameInterval);
-    clearTimeout(gameTimeout);
     hideMoles();
     if (score >= 100) {
         document.getElementById('end-message').classList.remove('hidden');
@@ -66,23 +61,29 @@ function endGame() {
         endAudio.play();
         // Add end animation code here
     }
-    rankings.push(score);
-    updateRankings();
     document.getElementById('restart-game').classList.remove('hidden');
     document.querySelectorAll('.hole').forEach(hole => {
         hole.removeEventListener('click', hitMole);
     });
 }
 
-function updateRankings() {
-    const rankingsList = document.getElementById('rankings-list');
-    rankingsList.innerHTML = '';
-    rankings.sort((a, b) => b - a);
-    rankings.forEach((score, index) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `第${index + 1}名: ${score}分`;
-        rankingsList.appendChild(listItem);
-    });
-}
+document.querySelectorAll('.hole').forEach(hole => {
+    hole.addEventListener('click', hitMole);
+});
 
-document
+document.getElementById('start-game').addEventListener('click', () => {
+    const speed = document.getElementById('speed').value;
+    const difficulty = document.getElementById('difficulty').value;
+
+    moleAppearanceTime = speed === 'fast' ? 600 : 1000;
+    gameDuration = difficulty === 'hard' ? 20000 : 30000;
+
+    document.getElementById('start-page').classList.add('hidden');
+    document.getElementById('game-page').classList.remove('hidden');
+    startGame();
+});
+
+document.getElementById('restart-game').addEventListener('click', () => {
+    document.getElementById('game-page').classList.add('hidden');
+    document.getElementById('start-page').classList.remove('hidden');
+});
