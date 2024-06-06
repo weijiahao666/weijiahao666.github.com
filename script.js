@@ -3,7 +3,6 @@ let score = 0;
 let activeHoles = [];
 let moleAppearanceTime = 800;
 let gameDuration = 30000; // 30 seconds by default
-let moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
@@ -16,8 +15,6 @@ function showMole() {
     for (let i = 0; i < numOfMoles; i++) {
         const hole = getRandomHole();
         if (!activeHoles.includes(hole)) {
-            const moleImage = moleImages[Math.floor(Math.random() * moleImages.length)];
-            hole.style.backgroundImage = `url(${moleImage})`;
             hole.classList.add('mole');
             activeHoles.push(hole);
         }
@@ -39,7 +36,6 @@ function hitMole(event) {
         const audio = new Audio('hit-sound.mp3');
         audio.play();
         event.target.classList.remove('mole');
-        event.target.style.backgroundImage = '';
         activeHoles = activeHoles.filter(hole => hole !== event.target);
     }
 }
