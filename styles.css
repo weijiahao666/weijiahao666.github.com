@@ -47,7 +47,7 @@ h1, p {
     align-items: center;
 }
 
-.mole {
+.mole, .bomb {
     width: 80px;
     height: 80px;
     background-size: cover;
@@ -75,6 +75,12 @@ button {
     border-radius: 8px;
 }
 
+#ad-video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (max-width: 600px) {
     #game {
         grid-template-columns: repeat(4, 75px);
@@ -86,7 +92,7 @@ button {
         height: 75px;
     }
 
-    .mole {
+    .mole, .bomb {
         width: 60px;
         height: 60px;
     }
