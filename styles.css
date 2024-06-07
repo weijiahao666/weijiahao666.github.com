@@ -75,6 +75,12 @@ button {
     border-radius: 8px;
 }
 
+#ad-video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (max-width: 600px) {
     #game {
         grid-template-columns: repeat(4, 75px);
