@@ -1,9 +1,10 @@
 // script.js
 let score = 0;
 let activeHoles = [];
-let moleAppearanceTime = 800;
+let moleAppearanceTime = 1000;
 let gameDuration = 30000; // 30 seconds by default
-let moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
+const moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
+const bombImage = 'bomb.png';
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
@@ -11,29 +12,21 @@ function getRandomHole() {
 }
 
 function showMole() {
-    hideMoles();
+    hideHoles();
     const numOfMoles = Math.floor(Math.random() * 4) + 1; // 1 to 4 moles
     for (let i = 0; i < numOfMoles; i++) {
         const hole = getRandomHole();
         if (!activeHoles.includes(hole)) {
-            const moleImage = moleImages[Math.floor(Math.random() * moleImages.length)];
+            const isBomb = Math.random() < 0.1; // 10% chance of bomb
+            const moleImage = isBomb ? bombImage : moleImages[Math.floor(Math.random() * moleImages.length)];
             hole.style.backgroundImage = `url(${moleImage})`;
-            hole.classList.add('mole');
-            activeHoles.push(hole);
-        }
-    }
-    // Randomly add a bomb
-    if (Math.random() < 0.2) { // 20% chance to show a bomb
-        const hole = getRandomHole();
-        if (!activeHoles.includes(hole)) {
-            hole.style.backgroundImage = 'url(bomb.png)';
-            hole.classList.add('bomb');
+            hole.classList.add(isBomb ? 'bomb' : 'mole');
             activeHoles.push(hole);
         }
     }
 }
 
-function hideMoles() {
+function hideHoles() {
     activeHoles.forEach(hole => {
         hole.classList.remove('mole', 'bomb');
         hole.style.backgroundImage = '';
@@ -71,7 +64,7 @@ function startGame() {
 }
 
 function endGame() {
-    hideMoles();
+    hideHoles();
     if (score >= 100) {
         document.getElementById('end-message').classList.remove('hidden');
         const endAudio = new Audio('end-sound.mp3');
@@ -102,11 +95,11 @@ document.getElementById('start-game').addEventListener('click', () => {
 
 document.getElementById('restart-game').addEventListener('click', () => {
     document.getElementById('game-page').classList.add('hidden');
-    document.getElementById('ad-video').classList.remove('hidden');
-    const adVideo = document.getElementById('ad');
+    document.getElementById('ad-modal').classList.remove('hidden');
+    const adVideo = document.getElementById('ad-video');
     adVideo.play();
     adVideo.onended = () => {
-        document.getElementById('ad-video').classList.add('hidden');
+        document.getElementById('ad-modal').classList.add('hidden');
         document.getElementById('start-page').classList.remove('hidden');
     };
 });
