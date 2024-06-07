@@ -22,11 +22,20 @@ function showMole() {
             activeHoles.push(hole);
         }
     }
+    // Randomly add a bomb
+    if (Math.random() < 0.2) { // 20% chance to show a bomb
+        const hole = getRandomHole();
+        if (!activeHoles.includes(hole)) {
+            hole.style.backgroundImage = 'url(bomb.png)';
+            hole.classList.add('bomb');
+            activeHoles.push(hole);
+        }
+    }
 }
 
 function hideMoles() {
     activeHoles.forEach(hole => {
-        hole.classList.remove('mole');
+        hole.classList.remove('mole', 'bomb');
         hole.style.backgroundImage = '';
     });
     activeHoles = [];
@@ -39,6 +48,14 @@ function hitMole(event) {
         const audio = new Audio('hit-sound.mp3');
         audio.play();
         event.target.classList.remove('mole');
+        event.target.style.backgroundImage = '';
+        activeHoles = activeHoles.filter(hole => hole !== event.target);
+    } else if (event.target.classList.contains('bomb')) {
+        score += 2;
+        document.getElementById('score').textContent = score;
+        const audio = new Audio('hit-sound.mp3');
+        audio.play();
+        event.target.classList.remove('bomb');
         event.target.style.backgroundImage = '';
         activeHoles = activeHoles.filter(hole => hole !== event.target);
     }
@@ -85,5 +102,11 @@ document.getElementById('start-game').addEventListener('click', () => {
 
 document.getElementById('restart-game').addEventListener('click', () => {
     document.getElementById('game-page').classList.add('hidden');
-    document.getElementById('start-page').classList.remove('hidden');
+    document.getElementById('ad-video').classList.remove('hidden');
+    const adVideo = document.getElementById('ad');
+    adVideo.play();
+    adVideo.onended = () => {
+        document.getElementById('ad-video').classList.add('hidden');
+        document.getElementById('start-page').classList.remove('hidden');
+    };
 });
