@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Start Page -->
     <div id="start-page">
         <img src="start-background.jpg" alt="Start Background" class="background">
         <h1>打野兔游戏</h1>
@@ -26,11 +25,10 @@
         </div>
     </div>
 
-    <!-- Game Page -->
     <div id="game-page" class="hidden">
         <img src="game-background.jpg" alt="Game Background" class="background">
         <h1>打野兔游戏</h1>
-        <p class="instructions">游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得1分，击毙炸弹获得2分。得分超过100分即为游戏通过。</p>
+        <p class="instructions">游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得1分，引爆炸弹获得2分。得分超过100分即为游戏通过。</p>
         <div id="game">
             <div class="hole" id="hole1"></div>
             <div class="hole" id="hole2"></div>
@@ -50,16 +48,13 @@
         </div>
         <div id="end-message" class="hidden">恭喜你，游戏通过！</div>
         <button id="restart-game" class="hidden">重新开始</button>
+        <div id="ad-video" class="hidden">
+            <video id="ad" width="320" height="240" controls>
+                <source src="ad.mp4" type="video/mp4">
+                牡丹花都唯有洛阳
+            </video>
+        </div>
     </div>
-
-    <!-- Ad Page -->
-    <div id="ad-page" class="hidden">
-        <video id="ad-video" width="320" height="240" controls>
-            <source src="ad.mp4" type="video/mp4">
-           洛阳花都
-        </video>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>
