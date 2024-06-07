@@ -1,10 +1,11 @@
 // script.js
 let score = 0;
 let activeHoles = [];
-let moleAppearanceTime = 1000;
+let moleAppearanceTime = 800;
 let gameDuration = 30000; // 30 seconds by default
-const moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
-const bombImage = 'bomb.png';
+let moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
+let bombImage = 'bomb.png';
+let bombProbability = 0.1; // 10% chance to show a bomb
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
@@ -12,21 +13,25 @@ function getRandomHole() {
 }
 
 function showMole() {
-    hideHoles();
+    hideMoles();
     const numOfMoles = Math.floor(Math.random() * 4) + 1; // 1 to 4 moles
     for (let i = 0; i < numOfMoles; i++) {
         const hole = getRandomHole();
         if (!activeHoles.includes(hole)) {
-            const isBomb = Math.random() < 0.1; // 10% chance of bomb
-            const moleImage = isBomb ? bombImage : moleImages[Math.floor(Math.random() * moleImages.length)];
-            hole.style.backgroundImage = `url(${moleImage})`;
-            hole.classList.add(isBomb ? 'bomb' : 'mole');
+            if (Math.random() < bombProbability) {
+                hole.style.backgroundImage = `url(${bombImage})`;
+                hole.classList.add('bomb');
+            } else {
+                const moleImage = moleImages[Math.floor(Math.random() * moleImages.length)];
+                hole.style.backgroundImage = `url(${moleImage})`;
+                hole.classList.add('mole');
+            }
             activeHoles.push(hole);
         }
     }
 }
 
-function hideHoles() {
+function hideMoles() {
     activeHoles.forEach(hole => {
         hole.classList.remove('mole', 'bomb');
         hole.style.backgroundImage = '';
@@ -64,7 +69,7 @@ function startGame() {
 }
 
 function endGame() {
-    hideHoles();
+    hideMoles();
     if (score >= 100) {
         document.getElementById('end-message').classList.remove('hidden');
         const endAudio = new Audio('end-sound.mp3');
@@ -95,11 +100,11 @@ document.getElementById('start-game').addEventListener('click', () => {
 
 document.getElementById('restart-game').addEventListener('click', () => {
     document.getElementById('game-page').classList.add('hidden');
-    document.getElementById('ad-modal').classList.remove('hidden');
+    document.getElementById('ad-page').classList.remove('hidden');
     const adVideo = document.getElementById('ad-video');
     adVideo.play();
     adVideo.onended = () => {
-        document.getElementById('ad-modal').classList.add('hidden');
+        document.getElementById('ad-page').classList.add('hidden');
         document.getElementById('start-page').classList.remove('hidden');
     };
 });
