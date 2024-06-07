@@ -105,8 +105,14 @@ document.getElementById('restart-game').addEventListener('click', () => {
     document.getElementById('ad-video').classList.remove('hidden');
     const adVideo = document.getElementById('ad');
     adVideo.play();
-    adVideo.onended = () => {
-        document.getElementById('ad-video').classList.add('hidden');
-        document.getElementById('start-page').classList.remove('hidden');
-    };
+});
+
+document.getElementById('ad').addEventListener('ended', () => {
+    document.getElementById('ad-video').classList.add('hidden');
+    document.getElementById('start-page').classList.remove('hidden');
+});
+
+document.getElementById('close-ad').addEventListener('click', () => {
+    document.getElementById('ad-video').classList.add('hidden');
+    document.getElementById('start-page').classList.remove('hidden');
 });
