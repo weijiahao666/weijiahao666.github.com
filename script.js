@@ -2,10 +2,11 @@
 let score = 0;
 let misses = 0;
 let maxMisses = 10;
-let activeHoles = [];
 let moleAppearanceTime = 800;
 let gameDuration = 30000; // 30 seconds by default
 let moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
+let activeHoles = [];
+let moleTimeouts = [];
 
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
@@ -33,6 +34,19 @@ function showMole() {
             activeHoles.push(hole);
         }
     }
+
+    activeHoles.forEach(hole => {
+        const timeoutId = setTimeout(() => {
+            if (hole.classList.contains('mole') || hole.classList.contains('bomb')) {
+                misses++;
+                document.getElementById('misses').textContent = misses;
+                if (misses >= maxMisses) {
+                    endGame();
+                }
+            }
+        }, moleAppearanceTime);
+        moleTimeouts.push(timeoutId);
+    });
 }
 
 function hideMoles() {
@@ -41,6 +55,8 @@ function hideMoles() {
         hole.style.backgroundImage = '';
     });
     activeHoles = [];
+    moleTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    moleTimeouts = [];
 }
 
 function hitMole(event) {
@@ -70,15 +86,12 @@ function startGame() {
     document.getElementById('misses').textContent = misses;
     document.getElementById('end-message').classList.add('hidden');
     document.getElementById('restart-game').classList.add('hidden');
+
     const intervalId = setInterval(() => {
         showMole();
-        if (activeHoles.length > 0) {
-            misses++;
-            document.getElementById('misses').textContent = misses;
-            if (misses >= maxMisses) {
-                clearInterval(intervalId);
-                endGame();
-            }
+        if (misses >= maxMisses) {
+            clearInterval(intervalId);
+            endGame();
         }
     }, moleAppearanceTime);
     setTimeout(() => {
@@ -88,11 +101,15 @@ function startGame() {
 }
 
 function endGame() {
+    hideMoles();
     document.getElementById('end-message').classList.remove('hidden');
     document.getElementById('restart-game').classList.remove('hidden');
     if (score > 100) {
+        document.getElementById('end-message').textContent = '恭喜你，游戏通过！';
         const audio = new Audio('end-sound.mp3');
         audio.play();
+    } else {
+        document.getElementById('end-message').textContent = '游戏结束，得分未达标！';
     }
 }
 
