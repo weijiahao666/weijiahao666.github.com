@@ -104,12 +104,12 @@ function endGame() {
     hideMoles();
     document.getElementById('end-message').classList.remove('hidden');
     document.getElementById('restart-game').classList.remove('hidden');
-    if (score > 100) {
+    if (score >= 100) {
         document.getElementById('end-message').textContent = '恭喜你，游戏通过！';
         const audio = new Audio('end-sound.mp3');
         audio.play();
     } else {
-        document.getElementById('end-message').textContent = '游戏结束，得分未达标！';
+        document.getElementById('end-message').textContent = '游戏结束，得分未达到100。';
     }
 }
 
