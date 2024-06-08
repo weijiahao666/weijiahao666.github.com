@@ -21,7 +21,7 @@ h1, p {
     z-index: -1;
 }
 
-.controls, .instructions, .score, .misses {
+.controls, .instructions, .score {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 10px;
@@ -32,12 +32,12 @@ h1, p {
 }
 
 #game {
-    display: grid;
-    grid-template-columns: repeat(4, 100px);
-    grid-template-rows: repeat(3, 100px);
-    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
+    gap: 10px;
+    margin: 20px auto;
+    max-width: 450px;
 }
 
 .hole {
@@ -90,11 +90,6 @@ button {
 }
 
 @media (max-width: 600px) {
-    #game {
-        grid-template-columns: repeat(4, 75px);
-        grid-gap: 5px;
-    }
-
     .hole {
         width: 75px;
         height: 75px;
