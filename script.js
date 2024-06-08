@@ -1,11 +1,10 @@
 // script.js
 let score = 0;
+let misses = 0;
+let maxMisses = 10;
 let activeHoles = [];
 let moleAppearanceTime = 800;
 let gameDuration = 30000; // 30 seconds by default
-let maxMissedMoles = 8; // default for easy
-let missedMoles = 0;
-let gameInterval;
 let moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png'];
 
 function getRandomHole() {
@@ -37,12 +36,6 @@ function showMole() {
 }
 
 function hideMoles() {
-    missedMoles += activeHoles.length; // count missed moles
-    if (missedMoles >= maxMissedMoles) {
-        endGame();
-        return;
-    }
-
     activeHoles.forEach(hole => {
         hole.classList.remove('mole', 'bomb');
         hole.style.backgroundImage = '';
@@ -72,21 +65,32 @@ function hitMole(event) {
 
 function startGame() {
     score = 0;
-    missedMoles = 0;
+    misses = 0;
     document.getElementById('score').textContent = score;
+    document.getElementById('misses').textContent = misses;
     document.getElementById('end-message').classList.add('hidden');
     document.getElementById('restart-game').classList.add('hidden');
-    gameInterval = setInterval(showMole, moleAppearanceTime);
-    setTimeout(endGame, gameDuration);
+    const intervalId = setInterval(() => {
+        showMole();
+        if (activeHoles.length > 0) {
+            misses++;
+            document.getElementById('misses').textContent = misses;
+            if (misses >= maxMisses) {
+                clearInterval(intervalId);
+                endGame();
+            }
+        }
+    }, moleAppearanceTime);
+    setTimeout(() => {
+        clearInterval(intervalId);
+        endGame();
+    }, gameDuration);
 }
 
 function endGame() {
-    clearInterval(gameInterval);
-    hideMoles();
+    document.getElementById('end-message').classList.remove('hidden');
     document.getElementById('restart-game').classList.remove('hidden');
-    if (score >= 100) {
-        document.getElementById('end-message').textContent = '恭喜你，游戏通过！';
-        document.getElementById('end-message').classList.remove('hidden');
+    if (score > 100) {
         const audio = new Audio('end-sound.mp3');
         audio.play();
     }
@@ -102,7 +106,7 @@ document.getElementById('start-game').addEventListener('click', () => {
 
     moleAppearanceTime = speed === 'fast' ? 600 : 1000;
     gameDuration = difficulty === 'hard' ? 20000 : 30000;
-    maxMissedMoles = difficulty === 'hard' ? 5 : 8;
+    maxMisses = difficulty === 'hard' ? 8 : 10;
 
     document.getElementById('start-page').classList.add('hidden');
     document.getElementById('game-page').classList.remove('hidden');
@@ -113,6 +117,7 @@ document.getElementById('restart-game').addEventListener('click', () => {
     document.getElementById('game-page').classList.add('hidden');
     document.getElementById('ad-video').classList.remove('hidden');
     const adVideo = document.getElementById('ad');
+    adVideo.src = Math.random() < 0.5 ? 'ad1.mp4' : 'ad2.mp4';
     adVideo.play();
 });
 
@@ -122,9 +127,7 @@ document.getElementById('ad').addEventListener('ended', () => {
 });
 
 document.getElementById('close-ad').addEventListener('click', () => {
-    const adVideo = document.getElementById('ad');
-    adVideo.pause();
-    adVideo.currentTime = 0;
+    document.getElementById('ad').pause();
     document.getElementById('ad-video').classList.add('hidden');
     document.getElementById('start-page').classList.remove('hidden');
 });
