@@ -109,7 +109,7 @@ function endGame() {
         const audio = new Audio('end-sound.mp3');
         audio.play();
     } else {
-        document.getElementById('end-message').textContent = '游戏结束，得分未达到100。';
+        document.getElementById('end-message').textContent = '游戏结束，得分未达标！';
     }
 }
 
