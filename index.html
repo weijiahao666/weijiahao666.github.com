@@ -27,9 +27,9 @@
 
     <div id="game-page" class="hidden">
         <img src="game-background.jpg" alt="Game Background" class="background">
-        <h1>打地鼠游戏</h1>
-        <p class="instructions">玩法说明：点击格子中的野兔来击毙它们，每击毙一个野兔获得1分，引爆炸弹获得2分。得分超过100分即为游戏通过。请一直点击，野兔会越来越多</p>
-        <div id="game">
+        <h1>打野兔游戏</h1>
+        <p class="instructions">游戏玩法说明：点击格子中的野兔来击毙它们，每击毙一个地鼠获得1分，引爆炸弹获得2分。得分超过100分即为游戏通过。请一直点击野兔。</p>
+        <div id="game" class="grid-container">
             <div class="hole" id="hole1"></div>
             <div class="hole" id="hole2"></div>
             <div class="hole" id="hole3"></div>
@@ -45,10 +45,9 @@
         </div>
         <div>
             <p class="score">得分: <span id="score">0</span></p>
-            <p class="misses">失误: <span id="misses">0</span></p>
         </div>
-        <div id="end-message" class="hidden">恭喜你，游戏通过！太棒了！</div>
-        <button id="restart-game" class="hidden">重新开始（观看视频）</button>
+        <div id="end-message" class="hidden">恭喜你，游戏通过！</div>
+        <button id="restart-game" class="hidden">重新开始</button>
         <div id="ad-video" class="hidden">
             <video id="ad" width="320" height="240" controls>
                 <source src="ad.mp4" type="video/mp4">
