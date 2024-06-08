@@ -21,7 +21,7 @@ h1, p {
     z-index: -1;
 }
 
-.controls, .instructions, .score {
+.controls, .instructions, .score, .misses {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 10px;
@@ -34,7 +34,10 @@ h1, p {
 #game {
     display: grid;
     grid-template-columns: repeat(4, 100px);
-    grid-gap: 10px;
+    grid-template-rows: repeat(3, 100px);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .hole {
