@@ -144,7 +144,8 @@ document.getElementById('ad').addEventListener('ended', () => {
 });
 
 document.getElementById('close-ad').addEventListener('click', () => {
-    document.getElementById('ad').pause();
+    const adVideo = document.getElementById('ad');
+    adVideo.pause();
     document.getElementById('ad-video').classList.add('hidden');
     document.getElementById('start-page').classList.remove('hidden');
 });
