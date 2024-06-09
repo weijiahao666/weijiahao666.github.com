@@ -109,7 +109,7 @@ function endGame() {
         const audio = new Audio('end-sound.mp3');
         audio.play();
     } else {
-        document.getElementById('end-message').textContent = '游戏结束，得分未达标。';
+        document.getElementById('end-message').textContent = '游戏结束，得分未达标！';
     }
 }
 
@@ -144,8 +144,7 @@ document.getElementById('ad').addEventListener('ended', () => {
 });
 
 document.getElementById('close-ad').addEventListener('click', () => {
-    const adVideo = document.getElementById('ad');
-    adVideo.pause();
+    document.getElementById('ad').pause();
     document.getElementById('ad-video').classList.add('hidden');
     document.getElementById('start-page').classList.remove('hidden');
 });
