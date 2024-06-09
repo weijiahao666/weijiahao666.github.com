@@ -8,12 +8,6 @@ let moleImages = ['mole1.png', 'mole2.png', 'mole3.png', 'mole4.png', 'mole5.png
 let activeHoles = [];
 let moleTimeouts = [];
 
-// 预加载广告视频
-const adVideo1 = new Video();
-adVideo1.src = 'ad1.mp4';
-const adVideo2 = new Video();
-adVideo2.src = 'ad2.mp4';
-
 function getRandomHole() {
     const holes = document.querySelectorAll('.hole');
     return holes[Math.floor(Math.random() * holes.length)];
@@ -150,8 +144,7 @@ document.getElementById('ad').addEventListener('ended', () => {
 });
 
 document.getElementById('close-ad').addEventListener('click', () => {
-    const adVideo = document.getElementById('ad');
-    adVideo.pause();
+    document.getElementById('ad').pause();
     document.getElementById('ad-video').classList.add('hidden');
     document.getElementById('start-page').classList.remove('hidden');
 });
